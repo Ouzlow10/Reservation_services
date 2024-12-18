@@ -1,5 +1,3 @@
-// file: src/app.js 
-
 const express = require('express');
 require("dotenv").config();
 const firebase = require("firebase/app");
@@ -26,7 +24,6 @@ const firebaseConfig = {
   firebase.initializeApp(firebaseConfig);
   const admin = require('firebase-admin');
 
-  //const serviceAccount = require("/home/ousmane-ndao/Downloads/reservationservice_apirest_nodejs-main (Copie)/FirebaseService.json");
   module.exports = {CREDENTIAL:{
     "type":process.env.type ,
     "project_id": process.env.project_id ,
@@ -62,8 +59,7 @@ const firebaseConfig = {
 var salt = bcrypt.genSaltSync(10);
 const auth = getAuth();
 const db = admin.firestore();
-/*const realtimedb=admin.database();
-const messaging = admin.messaging();*/
+
 var statutdefault;
 const { QuerySnapshot } = require('firebase-admin/firestore');
 //Secure With https by self-signed certificates
