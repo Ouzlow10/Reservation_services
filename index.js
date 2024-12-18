@@ -23,14 +23,28 @@ const firebaseConfig = {
     messagingSenderId: "226926139971",
     appId: "1:226926139971:web:67b77268c3446b6359d2f6"
   };
-
   firebase.initializeApp(firebaseConfig);
   const admin = require('firebase-admin');
- // const serviceAccount = require("/home/linux/Bureau/Stage_2SI/Mon_api_firebase/FirebaseService.json");
-  const serviceAccount=require(process.env.CREDENTIALS);  
+
+  //const serviceAccount = require("/home/ousmane-ndao/Downloads/reservationservice_apirest_nodejs-main (Copie)/FirebaseService.json");
+  module.exports = {CREDENTIAL:{
+    "type":process.env.type ,
+    "project_id": process.env.project_id ,
+    "private_key_id":process.env.private_key_id  ,
+    "private_key":process.env.private_key ,
+    "client_email":process.env.client_email  ,
+    "client_id":process.env.client_id  ,
+    "auth_uri":process.env.auth_uri ,
+    "token_uri":process.env.token_uri  ,
+    "auth_provider_x509_cert_url":process.env.auth_provider_x509_cert_url ,
+    "client_x509_cert_url":process.env.client_x509_cert_url  ,
+  }  }
+  const serviceAccount=require("./index.js").CREDENTIAL;  
+  const serviceAc = JSON.parse(JSON.stringify(serviceAccount));
   admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
+    credential: admin.credential.cert(serviceAc),
   });
+  const truncate = require('truncate-utf8-bytes');
   const maDate = new Date();
   var t = new Date(1970, 0, 1); // Epoch
   /* t.setSeconds(1732975800);
@@ -53,17 +67,17 @@ const messaging = admin.messaging();*/
 var statutdefault;
 const { QuerySnapshot } = require('firebase-admin/firestore');
 //Secure With https by self-signed certificates
-const https = require('https');
+/*const https = require('https');*/
 const fs = require('fs');
 const httpServer = http.createServer(app);
-const options = {
-  key: fs.readFileSync('/home/ousmane-ndao/Downloads/reservationservice_apirest_nodejs-main/server.key'),
-  cert: fs.readFileSync('/home/ousmane-ndao/Downloads/reservationservice_apirest_nodejs-main/server.crt')
+/*const options = {
+  key: fs.readFileSync(`${truncate(process.env.server_key,255)}`),
+  cert: fs.readFileSync(`${truncate(process.env.server_crt,255)}`)
 };
 
 const httpsServer=https.createServer(options, app);
 
-
+ */
 //Create middleware to check what kind of statut try to souscribe
 async function registerChecking(req, res,next) {
     const { email, password,adresse,nom,prenom,statut,telephone} = req.body;
@@ -2042,10 +2056,10 @@ app.delete("/api/delete/service/:id_service",authentification_admin,deleteServic
     console.log(`HTTP Server running on port ${PORT}`);
 });*/
 
-/* httpServer.listen(PORT, () => {
+httpServer.listen(PORT, () => {
     console.log(`HTTP Server running on port ${PORT}`);
 });
- */
-httpsServer.listen(8000, () => {
+ 
+/*httpsServer.listen(8000, () => {
     console.log('HTTPS Server running on port 8000');
-});
+});*/
