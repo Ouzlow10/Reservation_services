@@ -4,7 +4,8 @@ const express = require('express');
 require("dotenv").config();
 const firebase = require("firebase/app");
 const cookieParser = require('cookie-parser');
-require("dotenv").config();
+var dotenv = require('dotenv');
+dotenv.config();
 const PORT = process.env.PORT || 3000;
 const app = express();
 const http = require('http');
@@ -26,7 +27,7 @@ const firebaseConfig = {
   firebase.initializeApp(firebaseConfig);
   const admin = require('firebase-admin');
  // const serviceAccount = require("/home/linux/Bureau/Stage_2SI/Mon_api_firebase/FirebaseService.json");
-  const serviceAccount=require('/home/ousmane-ndao/Downloads/reservationservice_apirest_nodejs-main/FirebaseService.json');  
+  const serviceAccount=require(process.env.CREDENTIALS);  
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
   });
@@ -1045,18 +1046,7 @@ async function updateProfes(req,res){
                             nom_tech=req.body.nom ? req.body.nom : doc.data().nom;
                             prenom_tech=req.body.prenom ? req.body.prenom : doc.data().prenom;
                             nombreEff=doc.data().nombreEff;
-                            telephone=req.body.telephone ? req.body.telephone :doc.data().telephone;
-                           // profession_tech=req.body.profession ? req.body.profession : doc.data().profession;
-                           /*  if (!req.body.nom) {
-                                nom_tech=doc.data().nom;
-                            } else {
-                                nom_tech=req.body.nom
-                            } 
-                            if (!req.body.prenom) {
-                                prenom_tech=doc.data().prenom;
-                            } else {
-                                prenom_tech=req.body.prenom
-                            }*/
+                           
                             if (!req.body.profession) {
                                 profession_tech=doc.data().profession;
                             } else {
