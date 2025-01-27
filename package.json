@@ -20,6 +20,7 @@
     "express": "^4.21.2",
     "firebase": "^11.0.2",
     "firebase-admin": "^12.7.0",
+    "googleapis": "^144.0.0",
     "nodemon": "^3.1.9",
     "truncate-utf8-bytes": "^1.0.2",
     "web-push": "^3.6.7"

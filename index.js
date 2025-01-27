@@ -42,6 +42,27 @@ const firebaseConfig = {
     credential: admin.credential.cert(serviceAc),
   });
   const truncate = require('truncate-utf8-bytes');
+  const {google} = require('googleapis');
+
+// Each API may support multiple versions. With this sample, we're getting
+// v3 of the blogger API, and using an API key to authenticate.
+const blogger = google.blogger({
+  version: 'v3',
+  auth: 'AIzaSyBbNkLy452-06y3blv-S5x8wg1E61xXUAk'
+});
+
+const params = {
+  blogId: '3213900'
+};
+
+// get the blog details
+blogger.blogs.get(params, (err, res) => {
+  if (err) {
+    console.error(err);
+    throw err;
+  }
+  console.log(`The blog url is ${res.data.url}`);
+}); 
   const maDate = new Date();
   var t = new Date(1970, 0, 1); // Epoch
   /* t.setSeconds(1732975800);
@@ -2014,6 +2035,31 @@ async function deleteChoice (req,res){
             
         }})();
 }
+
+//RASA PART 
+const axios = require('axios');
+
+async function ResponseRasa(req,res) {
+    (async ()=>{
+        try {
+           const RASA_SERVER_URL = 'http://localhost:5005/webhooks/rest/webhook';
+           const { message } = req.body; // Get message and sender ID from client
+
+        const response = await axios.post(RASA_SERVER_URL, {
+            message: message
+        });
+        console.log(response.data)
+        res.json(response.data);
+
+
+        } catch (error) {
+            console.error("Error connecting to Rasa:", error.message);
+            res.status(500).json({ error: "Failed to connect to Rasa" });
+        }})();
+
+
+}
+app.post('/chat',ResponseRasa);
 app.post('/api/register',registerChecking,registerUser);
 app.get('/api/login',login);
 app.post('/api/logout', authentification,logoutUser);
