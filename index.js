@@ -4,6 +4,28 @@ const firebase = require("firebase/app");
 const cookieParser = require('cookie-parser');
 var dotenv = require('dotenv');
 dotenv.config();
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+
+const oauth2Client = new google.auth.OAuth2(
+    '1031708139330-3lce57ulejmb0fg674egm3bdhoo5gsh9.apps.googleusercontent.com',
+    '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',
+    'http://localhost:3000/oauth2callback'
+  );
+  
+  // generate a url that asks permissions for Blogger and Google Calendar scopes
+  const scopes = [
+    'https://www.googleapis.com/auth/blogger',
+    'https://www.googleapis.com/auth/calendar'
+  ];
+  
+  const url = oauth2Client.generateAuthUrl({
+    // 'online' (default) or 'offline' (gets refresh_token)
+    access_type: 'offline',
+  
+    // If you only need one scope, you can pass it as a string
+    scope: scopes
+  });
 const PORT = process.env.PORT || 3000;
 const app = express();
 const http = require('http');
