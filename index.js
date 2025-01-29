@@ -4,7 +4,6 @@ const firebase = require("firebase/app");
 const cookieParser = require('cookie-parser');
 var dotenv = require('dotenv');
 dotenv.config();
-<script src="https://apis.google.com/js/platform.js" async defer></script>
 
 
 const oauth2Client = new google.auth.OAuth2(
