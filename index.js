@@ -46,23 +46,41 @@ const firebaseConfig = {
 
 // Each API may support multiple versions. With this sample, we're getting
 // v3 of the blogger API, and using an API key to authenticate.
-const blogger = google.blogger({
+/*const blogger = google.blogger({
   version: 'v3',
-  auth: 'AIzaSyBbNkLy452-06y3blv-S5x8wg1E61xXUAk'
+ // auth: 'AIzaSyBbNkLy452-06y3blv-S5x8wg1E61xXUAk'
+ auth: 'AIzaSyBHIfTWXBxmxUA875q5hxGPIavVGH4Mcpw'
 });
 
 const params = {
-  blogId: '3213900'
+  blogId: '4379746567606201845'//'3213900'
 };
 
 // get the blog details
-blogger.blogs.get(params, (err, res) => {
-  if (err) {
-    console.error(err);
-    throw err;
+const { google } = require('googleapis');*/
+
+async function getBlog(blogId, apiKey) {
+  const blogger = google.blogger({
+    version: 'v3',
+    auth: apiKey,
+  });
+
+  try {
+    const response = await blogger.blogs.get({
+      blogId: blogId,
+    });
+    console.log('Blog Details:', response.data);
+  } catch (error) {
+    console.error('Error fetching blog:', error.message);
   }
-  console.log(`The blog url is ${res.data.url}`);
-}); 
+}
+
+// Replace with your Blog ID and API Key
+const blogId = '4379746567606201845';
+const apiKey = 'AIzaSyBHIfTWXBxmxUA875q5hxGPIavVGH4Mcpw';
+
+getBlog(blogId, apiKey);
+
   const maDate = new Date();
   var t = new Date(1970, 0, 1); // Epoch
   /* t.setSeconds(1732975800);
