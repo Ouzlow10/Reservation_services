@@ -3,6 +3,8 @@ require("dotenv").config();
 const firebase = require("firebase/app");
 const cookieParser = require('cookie-parser');
 var dotenv = require('dotenv');
+const {google} = require('googleapis');
+
 dotenv.config();
 
 
@@ -63,7 +65,6 @@ const firebaseConfig = {
     credential: admin.credential.cert(serviceAc),
   });
   const truncate = require('truncate-utf8-bytes');
-  const {google} = require('googleapis');
 
 // Each API may support multiple versions. With this sample, we're getting
 // v3 of the blogger API, and using an API key to authenticate.
